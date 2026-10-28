@@ -1,0 +1,44 @@
+{
+  "model_type": "RandomForestClassifier",
+  "version": "1.0.0",
+  "training_date": "2026-10-24T18:16:59.296033",
+  "dataset_type": "synthetic_demo_dataset",
+  "n_samples": 600,
+  "features": [
+    "accuracy",
+    "response_time",
+    "mistakes",
+    "score",
+    "hints_used",
+    "prev_diff_encoded"
+  ],
+  "feature_columns": [
+    "accuracy",
+    "response_time",
+    "mistakes",
+    "score",
+    "hints_used",
+    "prev_diff_encoded"
+  ],
+  "classes": [
+    "Easy",
+    "Medium",
+    "Hard"
+  ],
+  "hyperparameters": {
+    "n_estimators": 100,
+    "max_depth": 8,
+    "min_samples_split": 4,
+    "min_samples_leaf": 2,
+    "random_state": 42
+  },
+  "metrics": {
+    "accuracy": 0.9083,
+    "test_accuracy": 0.9083,
+    "weighted_precision": 0.912,
+    "weighted_recall": 0.9083,
+    "f1_score": 0.9084,
+    "weighted_f1": 0.9084
+  },
+  "disclaimer": "Academic prototype for cognitive gaming difficulty adaptation (SIH 2026). Strictly not a medical diagnostic or clinical assessment tool."
+}

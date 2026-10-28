@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caregiver Dashboard — MindBloom Cognitive Assistance</title>
+  <meta name="description" content="MindBloom Caregiver Dashboard: Real-time cognitive game progress, score analytics, accuracy trends, and session history for elderly memory care.">
+
+  <!-- Core Stylesheet and Dashboard Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <script>
+    (function() {
+      var token = localStorage.getItem('mindbloom_token');
+      if (!token) {
+        window.location.replace('login.html');
+      }
+    })();
+  </script>
+</head>
+<body class="dashboard-page">
+
+  <!-- Accessibility Toolbar -->
+  <div class="a11y-toolbar" role="region" aria-label="Accessibility display controls">
+    <div class="container a11y-container">
+      <span class="a11y-label">Elderly Accessibility:</span>
+      <div class="a11y-actions">
+        <span class="a11y-group-label">Text Size:</span>
+        <button type="button" class="btn-a11y active" id="btn-font-normal" aria-label="Default text size">A</button>
+        <button type="button" class="btn-a11y" id="btn-font-large" aria-label="Large text size">A+</button>
+        <button type="button" class="btn-a11y" id="btn-font-xlarge" aria-label="Extra large text size">A++</button>
+        <span class="a11y-separator" aria-hidden="true">|</span>
+        <button type="button" class="btn-a11y" id="btn-high-contrast" aria-pressed="false" aria-label="Toggle high contrast view">
+          <span>◑</span> High Contrast
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header & Navigation Bar -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav-bar" aria-label="Main Navigation">
+        
+        <!-- Brand Logo -->
+        <a href="index.html" class="brand" aria-label="MindBloom Home">
+          <svg class="brand-icon" viewBox="0 0 40 40" width="46" height="46" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="20" cy="20" r="18" fill="#185D50"/>
+            <path d="M20 10C16 10 12 14 12 19C12 25 20 30 20 30C20 30 28 25 28 19C28 14 24 10 20 10Z" fill="#C85A17"/>
+            <circle cx="20" cy="18" r="4" fill="#FEF9E7"/>
+          </svg>
+          <div class="brand-text">
+            <span class="brand-name">MindBloom</span>
+            <span class="brand-subtext">Caregiver Portal</span>
+          </div>
+        </a>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+          <span>☰</span> Menu
+        </button>
+
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="index.html#home" class="nav-link">Home</a></li>
+          <li><a href="index.html#game" class="nav-link">Memory Match Game</a></li>
+          <li><a href="dashboard.html" class="nav-link active" aria-current="page">Caregiver Dashboard</a></li>
+          <li class="nav-user-item">
+            <span class="nav-user-pill">
+              <span id="nav-user-name">Loading...</span>
+              <span id="nav-user-role" class="nav-role-badge">Caregiver</span>
+            </span>
+          </li>
+          <li><button type="button" id="btn-logout" class="nav-logout-btn">Log Out</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Dashboard Content -->
+  <main class="dashboard-main" id="main-content">
+    <div class="container">
+
+      <!-- Patient Profile Banner -->
+      <section class="patient-profile-card" aria-label="Active Elderly Patient Profile">
+        <div class="patient-info-wrap">
+          <div class="patient-avatar" aria-hidden="true">👵</div>
+          <div class="patient-details">
+            <h2 id="patient-name">Grandma Rose</h2>
+            <div class="patient-meta-row">
+              <span class="badge-tag badge-elderly">Elderly Patient #1</span>
+              <span>•</span>
+              <span class="badge-tag badge-caregiver">Monitored by David (Caregiver)</span>
+              <span>•</span>
+              <span id="patient-last-active">Checking activity...</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dashboard-actions">
+          <button type="button" class="btn btn-secondary" id="btn-refresh-dashboard" aria-label="Refresh live progress analytics">
+            <span>↻</span> Refresh Live Data
+          </button>
+          <a href="index.html#game" class="btn btn-primary" aria-label="Launch cognitive game session">
+            <span>▶</span> Start Memory Session
+          </a>
+        </div>
+      </section>
+
+      <!-- Error State Notification -->
+      <div id="dashboard-error-banner" class="error-banner" style="display: none;" role="alert">
+        <div class="error-banner-content">
+          <span style="font-size: 24px;" aria-hidden="true">⚠️</span>
+          <div>
+            <strong>Unable to connect to MindBloom backend.</strong>
+            <p id="dashboard-error-msg" style="margin: 2px 0 0 0; font-size: 14px;">
+              Please make sure the FastAPI server is running on http://127.0.0.1:8002.
+            </p>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary" id="btn-error-retry">Retry</button>
+      </div>
+
+      <!-- Loading State Indicator -->
+      <div id="dashboard-loading" class="loading-box" role="status" aria-live="polite">
+        <div class="loading-spinner" aria-hidden="true"></div>
+        <p style="font-size: 18px; font-weight: 700; color: var(--color-primary-dark);">
+          Loading cognitive game history and analytics...
+        </p>
+      </div>
+
+      <!-- Real Data Dashboard Container -->
+      <div id="dashboard-content" style="display: none;">
+
+        <!-- Section 1: Summary Cards (KPIs) -->
+        <section aria-label="Overall Gameplay Performance Summary">
+          <div class="summary-grid">
+            
+            <!-- Total Games -->
+            <article class="summary-card card-teal">
+              <div class="summary-card-header">
+                <span class="summary-title">Total Completed</span>
+                <span class="summary-icon" aria-hidden="true">🎮</span>
+              </div>
+              <div class="summary-val" id="summary-total-games">0</div>
+              <div class="summary-subtext" id="summary-games-breakdown">0 Easy • 0 Medium • 0 Hard</div>
+            </article>
+
+            <!-- Average Score -->
+            <article class="summary-card card-terracotta">
+              <div class="summary-card-header">
+                <span class="summary-title">Average Score</span>
+                <span class="summary-icon" aria-hidden="true">⭐</span>
+              </div>
+              <div class="summary-val" id="summary-avg-score">0</div>
+              <div class="summary-subtext">Cumulative points with bonus</div>
+            </article>
+
+            <!-- Average Accuracy -->
+            <article class="summary-card card-amber">
+              <div class="summary-card-header">
+                <span class="summary-title">Average Accuracy</span>
+                <span class="summary-icon" aria-hidden="true">🎯</span>
+              </div>
+              <div class="summary-val" id="summary-avg-accuracy">0%</div>
+              <div class="summary-subtext" id="summary-total-mistakes">0 total mismatches recorded</div>
+            </article>
+
+            <!-- Average Game Duration -->
+            <article class="summary-card card-blue">
+              <div class="summary-card-header">
+                <span class="summary-title">Average Duration</span>
+                <span class="summary-icon" aria-hidden="true">⏱️</span>
+              </div>
+              <div class="summary-val" id="summary-avg-duration">0s</div>
+              <div class="summary-subtext" id="summary-total-hints">0 hints requested across sessions</div>
+            </article>
+
+          </div>
+        </section>
+
+        <!-- Section 2: Progress Analytics & Trends -->
+        <section aria-label="Progress Analytics and Trends">
+          <h2 class="analytics-section-title">
+            <span>📈</span> Historical Progress Trends
+          </h2>
+
+          <div class="charts-grid">
+            
+            <!-- Chart 1: Score Trends Over Time -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div>
+                  <h3 class="chart-title">Cognitive Game Score Trend</h3>
+                  <p class="chart-desc">Tracks score performance across sequential Memory Match sessions.</p>
+                </div>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="chart-score-trend" aria-label="Score trend line chart" role="img"></canvas>
+              </div>
+            </div>
+
+            <!-- Chart 2: Difficulty Level Distribution -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div>
+                  <h3 class="chart-title">Difficulty Distribution</h3>
+                  <p class="chart-desc">Proportion of games played across difficulty levels.</p>
+                </div>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="chart-diff-distribution" aria-label="Difficulty distribution doughnut chart" role="img"></canvas>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="secondary-charts-grid">
+            
+            <!-- Chart 3: Accuracy Trends Over Time -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div>
+                  <h3 class="chart-title">Matching Accuracy Rate (%)</h3>
+                  <p class="chart-desc">Accuracy percentage per round with 80% benchmark target.</p>
+                </div>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="chart-accuracy-trend" aria-label="Accuracy trend line chart" role="img"></canvas>
+              </div>
+            </div>
+
+            <!-- Chart 4: Response Time Trends Over Time -->
+            <div class="chart-card">
+              <div class="chart-card-header">
+                <div>
+                  <h3 class="chart-title">Completion Duration (Seconds)</h3>
+                  <p class="chart-desc">Elapsed seconds taken to solve card decks over time.</p>
+                </div>
+              </div>
+              <div class="chart-canvas-wrap">
+                <canvas id="chart-time-trend" aria-label="Response time line chart" role="img"></canvas>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Section 3: Detailed Game Session History Table -->
+        <section aria-label="Detailed Game Session History">
+          <div class="history-card">
+            
+            <div class="history-header">
+              <div>
+                <h3 class="chart-title" style="margin-bottom: 2px;">Session History Log</h3>
+                <p class="chart-desc">
+                  Verified gameplay records stored in MySQL database (mindbloom_db). 
+                  <span class="badge-tag badge-caregiver" id="history-count">0 sessions logged</span>
+                </p>
+              </div>
+
+              <!-- Filter Buttons -->
+              <div class="filter-btn-group" role="group" aria-label="Filter sessions by difficulty">
+                <button type="button" class="filter-btn active" data-filter="all">All Levels</button>
+                <button type="button" class="filter-btn" data-filter="easy">Easy (8 Cards)</button>
+                <button type="button" class="filter-btn" data-filter="medium">Medium (12 Cards)</button>
+                <button type="button" class="filter-btn" data-filter="hard">Hard (16 Cards)</button>
+              </div>
+            </div>
+
+            <!-- Table Responsive Wrap -->
+            <div class="table-responsive">
+              <table class="history-table" id="history-table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date &amp; Time</th>
+                    <th scope="col">Played Difficulty</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Accuracy</th>
+                    <th scope="col">Mistakes</th>
+                    <th scope="col">Duration</th>
+                    <th scope="col">AI Next Recommendation</th>
+                  </tr>
+                </thead>
+                <tbody id="history-table-body">
+                  <!-- Dynamically populated by dashboard.js -->
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Empty State Container (Displayed when 0 sessions exist) -->
+      <div id="dashboard-empty-state" class="empty-state-box" style="display: none;">
+        <div class="empty-state-icon" aria-hidden="true">🌱</div>
+        <h3 class="empty-state-title">No Game Sessions Recorded Yet</h3>
+        <p class="empty-state-desc">
+          Grandma Rose has not played any Memory Match games yet. Once a game session is completed, 
+          performance analytics, score charts, and AI difficulty recommendations will appear here automatically.
+        </p>
+        <a href="index.html#game" class="btn btn-primary">
+          <span>▶</span> Play First Memory Game
+        </a>
+      </div>
+
+      <!-- Section 4: Registered Users & Excel Export (Caregiver / Admin Only) -->
+      <section id="registered-users-section" class="registered-users-section" aria-label="Registered Platform Users">
+        <div class="history-card">
+          
+          <div class="history-header">
+            <div>
+              <h3 class="chart-title" style="margin-bottom: 2px;">Registered Users</h3>
+              <p class="chart-desc">
+                Active accounts registered in MySQL database (mindbloom_db).
+                <span class="badge-tag badge-caregiver" id="users-count">Loading accounts...</span>
+              </p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="users-action-group" role="group" aria-label="Registered users management actions">
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-refresh-users" title="Refresh user list">
+                <span>🔄</span> Refresh Users
+              </button>
+              <button type="button" class="btn btn-primary btn-sm btn-export-excel" id="btn-export-users-excel" title="Download all registered users as Excel spreadsheet">
+                <span>📊</span> Export to Excel (.xlsx)
+              </button>
+            </div>
+          </div>
+
+          <!-- Loading State -->
+          <div id="users-loading" class="loading-box" style="padding: 30px 20px; display: none;">
+            <div class="loading-spinner"></div>
+            <p>Fetching registered accounts from server...</p>
+          </div>
+
+          <!-- Error Banner -->
+          <div id="users-error" class="notice-banner" style="display: none; margin-bottom: 16px; background-color: #FEF2F2; border-color: #FCA5A5;">
+            <svg class="notice-icon" viewBox="0 0 24 24" fill="#DC2626" aria-hidden="true" style="color: #DC2626; flex-shrink: 0;">
+              <path d="M12 2L1 21h22L12 2zm1 14h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+            </svg>
+            <div>
+              <strong style="color: #991B1B;">Unable to load registered users</strong>
+              <p id="users-error-message" style="margin: 4px 0 0 0; color: #7F1D1D; font-size: 14px;">Error details</p>
+            </div>
+          </div>
+
+          <!-- Empty State -->
+          <div id="users-empty" class="empty-state-box" style="display: none; padding: 30px 20px;">
+            <p class="empty-state-desc" style="margin: 0;">No registered users found in the database.</p>
+          </div>
+
+          <!-- Responsive Table Wrap -->
+          <div class="table-responsive" id="users-table-container">
+            <table class="history-table" id="users-table">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 90px; text-align: center;">User ID</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col" style="width: 140px; text-align: center;">User Type</th>
+                  <th scope="col" style="width: 200px; text-align: center;">Account Creation Date</th>
+                </tr>
+              </thead>
+              <tbody id="users-table-body">
+                <!-- Dynamically populated by dashboard.js -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Academic & Medical Disclaimer -->
+      <aside class="notice-banner" style="margin-top: var(--space-xl);" role="note" aria-label="Medical disclaimer notice">
+        <svg class="notice-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 2L1 21h22L12 2zm1 14h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+        </svg>
+        <div>
+          <h3 class="notice-title" style="font-size: 16px;">Caregiver Analytics &amp; Non-Medical Disclaimer</h3>
+          <p class="notice-text">
+            MindBloom is a <strong>non-medical academic prototype</strong> developed for SIH 2026. The performance trends and adaptive difficulty recommendations shown above 
+            are strictly intended for recreational cognitive stimulation and comfortable game pacing. 
+            <strong>MindBloom does NOT diagnose, treat, prevent, or evaluate dementia, Alzheimer's disease, or any medical condition.</strong>
+          </p>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 MindBloom Platform. SIH 2026 Academic Prototype (SIH26003).</p>
+        <p>Phase 6: Caregiver Dashboard &amp; Progress Analytics</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightweight Chart.js Library via CDN with safe vanilla fallback -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <!-- Dashboard Client Logic -->
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

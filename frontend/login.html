@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In / Register — MindBloom Cognitive Assistance</title>
+  <meta name="description" content="Sign in or create an account on MindBloom to access AI-powered cognitive games and caregiver progress analytics.">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+
+  <!-- Top Accessibility Bar (Elderly Friendly Font & Contrast Sizing) -->
+  <aside class="auth-a11y-bar" aria-label="Accessibility settings">
+    <div class="auth-a11y-inner">
+      <span class="a11y-label"><strong>Accessibility:</strong></span>
+      <div class="a11y-controls">
+        <button type="button" class="a11y-btn active" id="btn-font-normal">Standard</button>
+        <button type="button" class="a11y-btn" id="btn-font-large">Large (A+)</button>
+        <button type="button" class="a11y-btn" id="btn-font-xlarge">Extra Large (A++)</button>
+        <button type="button" class="a11y-btn" id="btn-high-contrast" aria-pressed="false">High Contrast</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content Landmark -->
+  <main class="auth-main">
+    <div class="auth-wrapper">
+
+      <!-- Primary Instagram-Style Auth Card -->
+      <section class="auth-card" aria-labelledby="auth-title">
+        
+        <!-- Brand Header -->
+        <a href="login.html" class="auth-brand" aria-label="MindBloom Home">
+          <svg class="auth-logo-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="24" cy="24" r="22" fill="#E3EFEA" stroke="#185D50" stroke-width="3"/>
+            <path d="M24 14C21 14 19 17 19 20C19 23 24 28 24 28C24 28 29 23 29 20C29 17 27 14 24 14Z" fill="#C85A17"/>
+            <path d="M14 24C14 21 17 19 20 19C23 19 28 24 28 24C28 24 23 29 20 29C17 29 14 27 14 24Z" fill="#185D50"/>
+            <path d="M34 24C34 21 31 19 28 19C25 19 20 24 20 24C20 24 25 29 28 29C31 29 34 27 34 24Z" fill="#185D50"/>
+            <path d="M24 34C21 34 19 31 19 28C19 25 24 20 24 20C24 20 29 25 29 28C29 31 27 34 24 34Z" fill="#C85A17"/>
+            <circle cx="24" cy="24" r="4" fill="#FEF9E7" stroke="#185D50" stroke-width="2"/>
+          </svg>
+          <h1 class="auth-brand-name" id="auth-title">MindBloom</h1>
+          <p class="auth-brand-tagline">AI-Powered Cognitive &amp; Memory Platform</p>
+        </a>
+
+        <!-- Segmented Tab Switcher (Sign In vs Sign Up) -->
+        <div class="auth-tabs" role="tablist" aria-label="Authentication Options">
+          <button type="button" class="auth-tab-btn active" id="tab-signin" role="tab" aria-selected="true" aria-controls="form-signin">
+            Sign In
+          </button>
+          <button type="button" class="auth-tab-btn" id="tab-signup" role="tab" aria-selected="false" aria-controls="form-signup">
+            Create Account
+          </button>
+        </div>
+
+        <!-- Dynamic Alert Message Box -->
+        <div id="auth-alert" class="auth-alert" role="alert" aria-live="polite"></div>
+
+        <!-- 1. SIGN IN FORM -->
+        <form id="form-signin" class="auth-form" novalidate>
+          <div class="form-field">
+            <label for="signin-email" class="form-label">Email Address</label>
+            <div class="form-input-wrap">
+              <input 
+                type="email" 
+                id="signin-email" 
+                name="email" 
+                class="form-input" 
+                placeholder="name@example.com" 
+                required 
+                autocomplete="email"
+              >
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="signin-password" class="form-label">Password</label>
+            <div class="form-input-wrap">
+              <input 
+                type="password" 
+                id="signin-password" 
+                name="password" 
+                class="form-input" 
+                placeholder="Enter your password" 
+                required 
+                autocomplete="current-password"
+              >
+              <button type="button" class="btn-toggle-pw" id="btn-toggle-signin-pw" aria-label="Toggle password visibility">Show</button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-auth-submit" id="btn-submit-signin">
+            <span>Sign In</span>
+          </button>
+        </form>
+
+        <!-- 2. SIGN UP FORM -->
+        <form id="form-signup" class="auth-form" style="display: none;" novalidate>
+          <div class="form-field">
+            <label for="signup-name" class="form-label">Full Name</label>
+            <div class="form-input-wrap">
+              <input 
+                type="text" 
+                id="signup-name" 
+                name="name" 
+                class="form-input" 
+                placeholder="e.g. Grandma Rose or David" 
+                required 
+                autocomplete="name"
+              >
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="signup-email" class="form-label">Email Address</label>
+            <div class="form-input-wrap">
+              <input 
+                type="email" 
+                id="signup-email" 
+                name="email" 
+                class="form-input" 
+                placeholder="name@example.com" 
+                required 
+                autocomplete="email"
+              >
+            </div>
+          </div>
+
+          <!-- Role Selection Cards -->
+          <div class="form-field">
+            <label class="form-label">Select Your Account Type</label>
+            <input type="hidden" id="signup-role" name="user_type" value="elderly">
+            <div class="role-selector" role="radiogroup" aria-label="Account Role">
+              <div class="role-card selected" id="role-opt-elderly" role="radio" aria-checked="true" tabindex="0">
+                <span class="role-icon" aria-hidden="true">👵</span>
+                <span class="role-title">Elderly Player</span>
+                <p class="role-desc">Play memory games</p>
+              </div>
+              <div class="role-card" id="role-opt-caregiver" role="radio" aria-checked="false" tabindex="0">
+                <span class="role-icon" aria-hidden="true">🩺</span>
+                <span class="role-title">Caregiver</span>
+                <p class="role-desc">Track patient progress</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="signup-password" class="form-label">Password (Min. 6 characters)</label>
+            <div class="form-input-wrap">
+              <input 
+                type="password" 
+                id="signup-password" 
+                name="password" 
+                class="form-input" 
+                placeholder="Create a password" 
+                required 
+                minlength="6"
+                autocomplete="new-password"
+              >
+              <button type="button" class="btn-toggle-pw" id="btn-toggle-signup-pw" aria-label="Toggle password visibility">Show</button>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="signup-confirm-password" class="form-label">Confirm Password</label>
+            <div class="form-input-wrap">
+              <input 
+                type="password" 
+                id="signup-confirm-password" 
+                name="confirm_password" 
+                class="form-input" 
+                placeholder="Confirm your password" 
+                required 
+                minlength="6"
+                autocomplete="new-password"
+              >
+              <button type="button" class="btn-toggle-pw" id="btn-toggle-signup-confirm-pw" aria-label="Toggle password visibility">Show</button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-auth-submit" id="btn-submit-signup">
+            <span>Create Account</span>
+          </button>
+        </form>
+
+      </section>
+
+      <!-- Instagram-Style Secondary Switcher Card -->
+      <section class="auth-switch-card">
+        <span id="switch-prompt">Don't have an account?</span>
+        <button type="button" class="auth-switch-link" id="btn-switch-auth">Sign up</button>
+      </section>
+
+      <!-- Quick Demo Credentials Helper Card for Testing/Evaluation -->
+      <aside class="demo-accounts-card" aria-label="Testing helper">
+        <div class="demo-header">
+          <span>💡</span>
+          <span>Quick Evaluation Credentials</span>
+        </div>
+        <p style="font-size: 0.8rem; color: #475569; margin-bottom: 8px;">
+          Click below to auto-fill a test account, or create a brand new account above:
+        </p>
+        <div class="demo-buttons">
+          <button type="button" class="demo-pill-btn" id="btn-quick-alice">
+            👵 Fill Alice (Elderly)
+          </button>
+          <button type="button" class="demo-pill-btn" id="btn-quick-david">
+            👨‍⚕️ Fill David (Caregiver)
+          </button>
+          <button type="button" class="demo-pill-btn" id="btn-quick-new">
+            ✨ Generate Random User
+          </button>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Non-Medical Academic Disclaimer Footer -->
+  <footer class="auth-footer">
+    <p><strong>Non-Medical Disclaimer:</strong> MindBloom is an academic prototype for SIH 2026 (Problem Statement SIH26003). It is designed for cognitive engagement and does not diagnose, treat, or cure dementia or any medical condition.</p>
+    <p>&copy; 2026 MindBloom Platform. All rights reserved.</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>
+

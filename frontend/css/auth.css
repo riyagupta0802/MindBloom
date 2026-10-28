@@ -1,0 +1,426 @@
+/**
+ * ==============================================================================
+ * MINDBLOOM — AUTHENTICATION STYLESHEET (Instagram-Inspired Modern Design)
+ * Calm, accessible, elegant aesthetic for elderly and caregiver login/signup
+ * ==============================================================================
+ */
+
+:root {
+  --teal-primary: #185D50;
+  --teal-dark: #0F3E35;
+  --teal-light: #E3EFEA;
+  --amber-accent: #C85A17;
+  --amber-hover: #A5480F;
+  --sand-bg: #F8FAF9;
+  --white: #FFFFFF;
+  --slate-dark: #1E293B;
+  --slate-muted: #64748B;
+  --slate-light: #E2E8F0;
+  --border-color: #DBE4E0;
+  --danger-color: #DC2626;
+  --danger-bg: #FEF2F2;
+  --success-color: #15803D;
+  --success-bg: #F0FDF4;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 20px -2px rgba(24, 93, 80, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --radius-card: 16px;
+  --radius-input: 10px;
+  --font-base: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* High Contrast Mode Variables */
+body.high-contrast {
+  --teal-primary: #000000;
+  --teal-dark: #000000;
+  --teal-light: #FFFFFF;
+  --amber-accent: #FFFF00;
+  --amber-hover: #FFFF00;
+  --sand-bg: #FFFFFF;
+  --white: #FFFFFF;
+  --slate-dark: #000000;
+  --slate-muted: #000000;
+  --slate-light: #000000;
+  --border-color: #000000;
+  --danger-color: #990000;
+  --danger-bg: #FFEECC;
+  --success-color: #006600;
+  --success-bg: #EEFFEE;
+}
+
+body.font-large {
+  font-size: 1.15rem;
+}
+body.font-xlarge {
+  font-size: 1.3rem;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-base);
+  background-color: var(--sand-bg);
+  color: var(--slate-dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+}
+
+/* Top A11y Bar */
+.auth-a11y-bar {
+  background-color: #EBF3F0;
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 16px;
+  font-size: 0.85rem;
+}
+.auth-a11y-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.a11y-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.a11y-btn {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--teal-primary);
+  transition: all 0.2s;
+}
+.a11y-btn:hover, .a11y-btn.active {
+  background: var(--teal-primary);
+  color: var(--white);
+  border-color: var(--teal-primary);
+}
+
+/* Main Container: Instagram-Style Layout */
+.auth-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.auth-wrapper {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Primary Auth Card */
+.auth-card {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-md);
+  padding: 32px 32px 28px;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+
+/* Brand Header */
+.auth-brand {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+.auth-logo-svg {
+  width: 58px;
+  height: 58px;
+  margin-bottom: 10px;
+}
+.auth-brand-name {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--teal-primary);
+  letter-spacing: -0.5px;
+}
+.auth-brand-tagline {
+  font-size: 0.9rem;
+  color: var(--slate-muted);
+  margin-top: 2px;
+}
+
+/* Tab Switcher (Sign In vs Sign Up) */
+.auth-tabs {
+  display: flex;
+  background-color: #EDF3F1;
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 24px;
+}
+.auth-tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--slate-muted);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.auth-tab-btn.active {
+  background: var(--white);
+  color: var(--teal-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Feedback Alert Banner */
+.auth-alert {
+  display: none;
+  padding: 12px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin-bottom: 18px;
+  text-align: left;
+  line-height: 1.4;
+}
+.auth-alert.error {
+  display: block;
+  background-color: var(--danger-bg);
+  color: var(--danger-color);
+  border: 1px solid #FECACA;
+}
+.auth-alert.success {
+  display: block;
+  background-color: var(--success-bg);
+  color: var(--success-color);
+  border: 1px solid #BBF7D0;
+}
+.auth-alert.info {
+  display: block;
+  background-color: #EFF6FF;
+  color: #1D4ED8;
+  border: 1px solid #BFDBFE;
+}
+
+/* Form Styles */
+.auth-form {
+  text-align: left;
+}
+.form-field {
+  margin-bottom: 16px;
+}
+.form-label {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--slate-dark);
+  margin-bottom: 6px;
+}
+.form-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.form-input {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 0.98rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-input);
+  background: #FCFDFD;
+  color: var(--slate-dark);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.form-input:focus {
+  border-color: var(--teal-primary);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(24, 93, 80, 0.15);
+}
+.btn-toggle-pw {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: var(--teal-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+.btn-toggle-pw:hover {
+  background-color: #EBF3F0;
+}
+
+/* Role Selector for Sign Up */
+.role-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 6px;
+}
+.role-card {
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  background: #FCFDFD;
+  transition: all 0.2s;
+}
+.role-card:hover {
+  border-color: var(--teal-primary);
+}
+.role-card.selected {
+  border-color: var(--teal-primary);
+  background: var(--teal-light);
+}
+.role-icon {
+  font-size: 1.5rem;
+  display: block;
+  margin-bottom: 2px;
+}
+.role-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--slate-dark);
+}
+.role-card.selected .role-title {
+  color: var(--teal-primary);
+}
+.role-desc {
+  font-size: 0.72rem;
+  color: var(--slate-muted);
+  margin-top: 2px;
+}
+
+/* Primary Submit Button */
+.btn-auth-submit {
+  width: 100%;
+  background: var(--teal-primary);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-input);
+  padding: 14px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background-color 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-auth-submit:hover {
+  background: var(--teal-dark);
+}
+.btn-auth-submit:active {
+  transform: translateY(1px);
+}
+.btn-auth-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Secondary Switcher Card (Instagram Style) */
+.auth-switch-card {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  padding: 18px;
+  text-align: center;
+  font-size: 0.95rem;
+  box-shadow: var(--shadow-sm);
+}
+.auth-switch-link {
+  color: var(--teal-primary);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  margin-left: 4px;
+}
+.auth-switch-link:hover {
+  text-decoration: underline;
+  color: var(--teal-dark);
+}
+
+/* Quick-Fill Demo Helper Card */
+.demo-accounts-card {
+  background: #F4F8F6;
+  border: 1px dashed var(--teal-primary);
+  border-radius: 12px;
+  padding: 14px 16px;
+  text-align: left;
+}
+.demo-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--teal-primary);
+  margin-bottom: 8px;
+}
+.demo-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.demo-pill-btn {
+  background: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--slate-dark);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.demo-pill-btn:hover {
+  background: var(--teal-primary);
+  color: var(--white);
+  border-color: var(--teal-primary);
+}
+
+/* Non-medical Disclaimer Footer */
+.auth-footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--slate-muted);
+  padding: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.auth-footer p {
+  margin-bottom: 6px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 24px 20px;
+  }
+  .auth-brand-name {
+    font-size: 1.6rem;
+  }
+}
+

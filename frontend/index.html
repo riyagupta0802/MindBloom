@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindBloom — AI-Powered Cognitive & Memory Assistance Platform</title>
+  <meta name="description" content="MindBloom is an accessible, AI-powered cognitive gaming and memory assistance platform designed for elderly individuals and caregivers. Academic prototype for SIH 2026.">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      var token = localStorage.getItem('mindbloom_token');
+      if (!token) {
+        window.location.replace('login.html');
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Accessible Skip to Main Content Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Top Accessibility Bar (Elderly Friendly Font & Contrast Sizing) -->
+  <aside class="a11y-bar" aria-label="Accessibility controls">
+    <div class="container">
+      <span class="a11y-label">Accessibility Settings:</span>
+      <div class="a11y-controls">
+        <span id="font-controls-label">Text Size:</span>
+        <button type="button" class="a11y-btn active" id="btn-font-normal" aria-labelledby="font-controls-label btn-font-normal">Standard</button>
+        <button type="button" class="a11y-btn" id="btn-font-large" aria-labelledby="font-controls-label btn-font-large">Large (A+)</button>
+        <button type="button" class="a11y-btn" id="btn-font-xlarge" aria-labelledby="font-controls-label btn-font-xlarge">Extra Large (A++)</button>
+        <button type="button" class="a11y-btn" id="btn-high-contrast" aria-pressed="false">High Contrast Mode</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Navigation Header -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav-bar" aria-label="Main Navigation">
+        <!-- Logo / Brand Name -->
+        <a href="#home" class="brand" aria-label="MindBloom Home">
+          <svg class="brand-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <circle cx="24" cy="24" r="22" fill="#E3EFEA" stroke="#185D50" stroke-width="3"/>
+            <!-- Gentle Flower / Blooming Petals Concept -->
+            <path d="M24 14C21 14 19 17 19 20C19 23 24 28 24 28C24 28 29 23 29 20C29 17 27 14 24 14Z" fill="#C85A17"/>
+            <path d="M14 24C14 21 17 19 20 19C23 19 28 24 28 24C28 24 23 29 20 29C17 29 14 27 14 24Z" fill="#185D50"/>
+            <path d="M34 24C34 21 31 19 28 19C25 19 20 24 20 24C20 24 25 29 28 29C31 29 34 27 34 24Z" fill="#185D50"/>
+            <path d="M24 34C21 34 19 31 19 28C19 25 24 20 24 20C24 20 29 25 29 28C29 31 27 34 24 34Z" fill="#C85A17"/>
+            <circle cx="24" cy="24" r="4" fill="#FEF9E7" stroke="#185D50" stroke-width="2"/>
+          </svg>
+          <div class="brand-text">
+            <span class="brand-name">MindBloom</span>
+            <span class="brand-subtext">Cognitive Assistance</span>
+          </div>
+        </a>
+
+        <!-- Mobile Menu Hamburger Button -->
+        <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation menu">
+          <span>☰</span> Menu
+        </button>
+
+        <!-- Navigation Links -->
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+          <li><a href="#features" class="nav-link">Features</a></li>
+          <li><a href="#game" class="nav-link">Memory Match</a></li>
+          <li><a href="dashboard.html" class="nav-link">Caregiver Dashboard</a></li>
+          <li class="nav-user-item">
+            <a href="#account" class="nav-user-pill" style="text-decoration: none;">
+              <span id="nav-user-name">Loading...</span>
+              <span id="nav-user-role" class="nav-role-badge">Player</span>
+            </a>
+          </li>
+          <li><button type="button" id="btn-logout" class="nav-logout-btn">Log Out</button></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Landmark -->
+  <main id="main-content">
+
+    <!-- ====================================================================
+         1 & 3. HERO SECTION & LANDING PAGE
+         ==================================================================== -->
+    <section class="section hero" id="home">
+      <div class="container">
+        <div class="hero-grid">
+          
+          <!-- Hero Text Content -->
+          <div class="hero-content">
+            <div class="sih-badge">
+              <span>🌟</span>
+              <span>SIH 2026 • Problem Statement SIH26003</span>
+            </div>
+
+            <h1 class="hero-title">MindBloom</h1>
+            <p class="hero-tagline">AI-Powered Cognitive &amp; Memory Assistance Platform</p>
+
+            <p class="hero-desc">
+              A welcoming, accessible digital space designed for elderly individuals and their dedicated caregivers. 
+              MindBloom offers engaging cognitive games, personalized activity pacing, gentle daily reminders, 
+              and caregiver monitoring—empowering active minds with warmth, dignity, and simplicity.
+            </p>
+
+            <!-- Important Academic & Medical Limitation Notice -->
+            <aside class="notice-banner" role="note" aria-label="Medical disclaimer notice">
+              <svg class="notice-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2L1 21h22L12 2zm1 14h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+              </svg>
+              <div>
+                <h2 class="notice-title">Important Academic Prototype Notice</h2>
+                <p class="notice-text">
+                  MindBloom is an academic prototype developed for SIH 2026. 
+                  It is strictly designed for recreational cognitive stimulation and memory assistance. 
+                  <strong>It does NOT diagnose, treat, prevent, or cure dementia or any medical condition.</strong>
+                </p>
+              </div>
+            </aside>
+
+            <!-- Call-to-Action Buttons -->
+            <div class="hero-actions">
+              <a href="#game" class="btn btn-primary">
+                Play Memory Match <span>→</span>
+              </a>
+              <a href="#about" class="btn btn-secondary">
+                Learn More
+              </a>
+            </div>
+          </div>
+
+          <!-- Hero Visual: Friendly Interactive Game Tile Preview -->
+          <div class="hero-visual" aria-hidden="true">
+            <div class="hero-card-preview">
+              <div class="preview-header">
+                <div class="preview-icon-box">
+                  <span style="font-size: 26px;">🧠</span>
+                </div>
+                <div>
+                  <h3 style="font-size: 20px; color: var(--color-primary-dark); margin:0;">Memory Match Preview</h3>
+                  <span style="font-size: 14px; color: var(--color-text-muted);">Gentle Cognitive Warmup</span>
+                </div>
+                <span class="preview-badge">Adaptive AI</span>
+              </div>
+
+              <p style="font-size: 15px; color: var(--color-text-muted); margin-bottom: 12px;">
+                Tap cards to reveal pairs. In Phase 3, this game will actively adapt its difficulty to your comfort level:
+              </p>
+
+              <div class="preview-game-grid" id="preview-grid">
+                <div class="preview-tile" title="Tap to flip card">🌸</div>
+                <div class="preview-tile matched" title="Matched card">🌻</div>
+                <div class="preview-tile" title="Tap to flip card">🍃</div>
+                <div class="preview-tile matched" title="Matched card">🌻</div>
+                <div class="preview-tile" title="Tap to flip card">🌸</div>
+                <div class="preview-tile" title="Tap to flip card">🍃</div>
+              </div>
+
+              <div class="preview-status">
+                <span id="preview-status-text">Interactive Demo Preview</span>
+                <span style="color: var(--color-primary); font-weight: bold;">Level: Friendly</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         4. ABOUT SECTION
+         ==================================================================== -->
+    <section class="section section-alt" id="about">
+      <div class="container">
+        
+        <header class="section-header">
+          <span class="section-tag">About MindBloom</span>
+          <h2 class="section-title">Supporting Mental Agility with Dignity &amp; Care</h2>
+          <p class="section-desc">
+            Designed specifically for senior citizens and individuals facing memory difficulties, 
+            especially focusing on communities across the North Eastern Region.
+          </p>
+        </header>
+
+        <div class="about-grid">
+          
+          <!-- About Card 1: What It Is -->
+          <article class="about-card">
+            <div class="about-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2a9 9 0 0 1 9 9c0 4.97-4.03 9-9 9a9 9 0 0 1-9-9c0-4.97 4.03-9 9-9z"/>
+                <path d="M12 7v5l3 3"/>
+              </svg>
+            </div>
+            <h3>What is MindBloom?</h3>
+            <p>
+              MindBloom is a compassionate web application created for SIH 2026 (SIH26003). 
+              It provides stimulating brain exercises, daily routine reminders, and easy progress tracking 
+              to keep everyday life organized and enjoyable.
+            </p>
+          </article>
+
+          <!-- About Card 2: Who It Is For -->
+          <article class="about-card">
+            <div class="about-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <h3>Who is it Designed For?</h3>
+            <p>
+              <strong>Elderly Individuals:</strong> Seniors experiencing mild memory slips or early dementia symptoms who benefit from structured mental activities.<br><br>
+              <strong>Caregivers &amp; Families:</strong> Relatives and healthcare aides who want gentle visibility into their loved one's daily engagement.
+            </p>
+          </article>
+
+          <!-- About Card 3: Why Cognitive Engagement Matters -->
+          <article class="about-card">
+            <div class="about-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <h3>Why Cognitive Engagement?</h3>
+            <p>
+              Regular cognitive engagement helps maintain focus, recall, and confidence. 
+              By adapting difficulty automatically, MindBloom prevents frustration, encourages 
+              daily practice, and creates a positive, stress-free routine.
+            </p>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         5. HOW IT WORKS SECTION (VISUAL WORKFLOW)
+         ==================================================================== -->
+    <section class="section" id="how-it-works">
+      <div class="container">
+
+        <header class="section-header">
+          <span class="section-tag">Platform Workflow</span>
+          <h2 class="section-title">How MindBloom Works</h2>
+          <p class="section-desc">
+            A seamless, adaptive cycle designed to support elderly users at their own personal pace.
+          </p>
+        </header>
+
+        <div class="workflow-container">
+          
+          <div class="workflow-steps-horizontal" role="list">
+            
+            <!-- Step 1 -->
+            <div class="workflow-step" role="listitem">
+              <div class="step-number" aria-hidden="true">1</div>
+              <div class="step-icon-wrap" aria-hidden="true">
+                <span style="font-size: 24px;">🎮</span>
+              </div>
+              <h3 class="step-title">User Plays Game</h3>
+              <p class="step-desc">The elderly user plays simple, enjoyable cognitive games like Memory Matching.</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="workflow-step" role="listitem">
+              <div class="step-number" aria-hidden="true">2</div>
+              <div class="step-icon-wrap" aria-hidden="true">
+                <span style="font-size: 24px;">📊</span>
+              </div>
+              <h3 class="step-title">Performance Recorded</h3>
+              <p class="step-desc">Accuracy, response time, mistakes, and hints are captured automatically in the background.</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="workflow-step" role="listitem">
+              <div class="step-number" aria-hidden="true">3</div>
+              <div class="step-icon-wrap" aria-hidden="true">
+                <span style="font-size: 24px;">🤖</span>
+              </div>
+              <h3 class="step-title">AI Analyzes Data</h3>
+              <p class="step-desc">A Random Forest machine learning model analyzes recent performance patterns.</p>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="workflow-step" role="listitem">
+              <div class="step-number" aria-hidden="true">4</div>
+              <div class="step-icon-wrap" aria-hidden="true">
+                <span style="font-size: 24px;">⚙️</span>
+              </div>
+              <h3 class="step-title">Difficulty Personalized</h3>
+              <p class="step-desc">The next game is automatically calibrated to Easy, Medium, or Hard to keep play enjoyable.</p>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="workflow-step" role="listitem">
+              <div class="step-number" aria-hidden="true">5</div>
+              <div class="step-icon-wrap" aria-hidden="true">
+                <span style="font-size: 24px;">📈</span>
+              </div>
+              <h3 class="step-title">Progress Tracked</h3>
+              <p class="step-desc">Caregivers and users view trends over time without any complex medical jargon.</p>
+            </div>
+
+          </div>
+
+          <div class="workflow-note">
+            ℹ️ <strong>Phase 1 Note:</strong> This diagram illustrates the architectural workflow. 
+            The machine learning model, FastAPI backend, and SQL database will be implemented in subsequent phases.
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         6. FEATURES SECTION
+         ==================================================================== -->
+    <section class="section section-alt" id="features">
+      <div class="container">
+
+        <header class="section-header">
+          <span class="section-tag">Core Capabilities</span>
+          <h2 class="section-title">Built for Comfort, Clarity, and Connection</h2>
+          <p class="section-desc">
+            Explore the key features designed to make cognitive exercise encouraging and caregiving effortless.
+          </p>
+        </header>
+
+        <div class="features-grid">
+
+          <!-- Feature 1 -->
+          <article class="feature-card">
+            <div class="feature-icon-box" aria-hidden="true">
+              <span style="font-size: 28px;">🃏</span>
+            </div>
+            <h3 class="feature-title">Cognitive Games</h3>
+            <p class="feature-desc">
+              Thoughtfully curated games including Memory Matching, Picture Recall, and Sequence Memory designed to stimulate active recall.
+            </p>
+            <a href="#game" class="feature-tag" style="text-decoration: none;"><span>▶</span> Play Memory Match &rarr;</a>
+          </article>
+
+          <!-- Feature 2 -->
+          <article class="feature-card">
+            <div class="feature-icon-box" aria-hidden="true">
+              <span style="font-size: 28px;">🧠</span>
+            </div>
+            <h3 class="feature-title">AI Personalization</h3>
+            <p class="feature-desc">
+              Adaptive difficulty models adjust challenge levels according to user response speed and accuracy, ensuring zero frustration.
+            </p>
+            <span class="feature-tag"><span>✓</span> Scikit-Learn Model</span>
+          </article>
+
+          <!-- Feature 3 -->
+          <article class="feature-card">
+            <div class="feature-icon-box" aria-hidden="true">
+              <span style="font-size: 28px;">📊</span>
+            </div>
+            <h3 class="feature-title">Progress Tracking</h3>
+            <p class="feature-desc">
+              Clean visual graphs showing completion trends, play frequency, and performance indicators powered by Chart.js.
+            </p>
+            <span class="feature-tag"><span>✓</span> Visual Charts</span>
+          </article>
+
+          <!-- Feature 4 -->
+          <article class="feature-card">
+            <div class="feature-icon-box" aria-hidden="true">
+              <span style="font-size: 28px;">⏰</span>
+            </div>
+            <h3 class="feature-title">Memory Reminders</h3>
+            <p class="feature-desc">
+              High-visibility notifications for daily routines, hydration, medication, and upcoming family check-ins.
+            </p>
+            <span class="feature-tag"><span>✓</span> Clear &amp; Timely</span>
+          </article>
+
+          <!-- Feature 5 -->
+          <article class="feature-card">
+            <div class="feature-icon-box" aria-hidden="true">
+              <span style="font-size: 28px;">👨‍👩‍👦</span>
+            </div>
+            <h3 class="feature-title">Caregiver Dashboard</h3>
+            <p class="feature-desc">
+              A dedicated portal for family members to monitor play consistency, view history, and coordinate assistance.
+            </p>
+            <a href="dashboard.html" class="feature-tag" style="text-decoration: none;"><span>📊</span> View Caregiver Dashboard &rarr;</a>
+          </article>
+
+          <!-- Feature 6 -->
+          <article class="feature-card">
+            <div class="feature-icon-box" aria-hidden="true">
+              <span style="font-size: 28px;">👁️</span>
+            </div>
+            <h3 class="feature-title">Accessible Interface</h3>
+            <p class="feature-desc">
+              Extra-large typography, high-contrast mode, soft colors, and generous touch targets crafted for senior citizens.
+            </p>
+            <span class="feature-tag"><span>✓</span> Senior-Friendly</span>
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         COGNITIVE GAME: MEMORY MATCH (PHASE 2)
+         ==================================================================== -->
+    <section class="section game-section" id="game" aria-label="Memory Matching Cognitive Game">
+      <div class="container">
+
+        <header class="section-header">
+          <span class="section-tag">Cognitive Exercise</span>
+          <h2 class="section-title">Memory Match</h2>
+          <p class="section-desc">
+            Find all the matching pairs. Tap two cards to reveal them.
+          </p>
+        </header>
+
+        <div class="game-wrapper">
+
+          <!-- Game Control & Settings Panel -->
+          <div class="game-control-panel">
+            
+            <!-- Difficulty Selector -->
+            <div class="difficulty-control">
+              <span class="control-label" id="difficulty-label">Select Difficulty:</span>
+              <div class="difficulty-btn-group" role="group" aria-labelledby="difficulty-label">
+                <button type="button" class="btn-diff active" data-difficulty="easy" id="diff-easy" aria-pressed="true">
+                  <span class="diff-title">Easy</span>
+                  <span class="diff-sub">4 Pairs (8 Cards)</span>
+                </button>
+                <button type="button" class="btn-diff" data-difficulty="medium" id="diff-medium" aria-pressed="false">
+                  <span class="diff-title">Medium</span>
+                  <span class="diff-sub">6 Pairs (12 Cards)</span>
+                </button>
+                <button type="button" class="btn-diff" data-difficulty="hard" id="diff-hard" aria-pressed="false">
+                  <span class="diff-title">Hard</span>
+                  <span class="diff-sub">8 Pairs (16 Cards)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Action Buttons: Start, Restart, Hint -->
+            <div class="game-action-buttons">
+              <button type="button" class="btn btn-primary" id="btn-start-game">
+                <span>▶</span> Start Game
+              </button>
+              <button type="button" class="btn btn-secondary" id="btn-restart-game">
+                <span>↻</span> Restart
+              </button>
+              <button type="button" class="btn btn-hint" id="btn-hint-game" title="Peek at an unmatched pair briefly">
+                <span>💡</span> Need a Hint?
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Live Game Statistics Bar -->
+          <div class="game-stats-bar" aria-live="polite" aria-label="Live Game Statistics">
+            <div class="stat-badge">
+              <span class="stat-label">Score</span>
+              <span class="stat-value" id="stat-score">0</span>
+            </div>
+            <div class="stat-badge">
+              <span class="stat-label">Timer</span>
+              <span class="stat-value" id="stat-timer">00:00</span>
+            </div>
+            <div class="stat-badge">
+              <span class="stat-label">Pairs Matched</span>
+              <span class="stat-value" id="stat-matched">0 / 4</span>
+            </div>
+            <div class="stat-badge">
+              <span class="stat-label">Attempts</span>
+              <span class="stat-value" id="stat-attempts">0</span>
+            </div>
+            <div class="stat-badge">
+              <span class="stat-label">Mistakes</span>
+              <span class="stat-value" id="stat-mistakes">0</span>
+            </div>
+            <div class="stat-badge">
+              <span class="stat-label">Accuracy</span>
+              <span class="stat-value" id="stat-accuracy">0%</span>
+            </div>
+            <div class="stat-badge">
+              <span class="stat-label">Hints Used</span>
+              <span class="stat-value" id="stat-hints">0</span>
+            </div>
+          </div>
+
+          <!-- Game Board Outer Container -->
+          <div class="game-board-outer">
+            <!-- Screen reader accessible announcement -->
+            <div id="game-sr-status" class="sr-only" role="status" aria-live="polite"></div>
+
+            <!-- The Grid of Memory Cards -->
+            <div class="game-board grid-easy" id="game-board" role="region" aria-label="Memory Card Board">
+              <!-- Dynamically rendered by JavaScript -->
+            </div>
+          </div>
+
+          <!-- Elderly-Friendly Reassurance Tip -->
+          <div class="game-tip-box">
+            <span>🌿 <strong>Elderly-Friendly Tip:</strong> Take all the time you need! There is no rush or time penalty. Relax and enjoy finding each pair.</span>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         7. USER ACCOUNT & AUTHENTICATION STATUS
+         ==================================================================== -->
+    <section class="section login-section" id="account">
+      <div class="container">
+
+        <header class="section-header">
+          <span class="section-tag">Account Session</span>
+          <h2 class="section-title">Your MindBloom Profile</h2>
+          <p class="section-desc">
+            Secure, authenticated session with encrypted password protection.
+          </p>
+        </header>
+
+        <div class="login-wrapper">
+          <div class="login-box account-status-card">
+            
+            <div class="account-profile-header">
+              <div class="account-avatar" id="account-avatar" aria-hidden="true">👤</div>
+              <div class="account-info">
+                <h3 id="profile-display-name">Loading User...</h3>
+                <p id="profile-display-email" class="profile-email">email@example.com</p>
+                <span id="profile-display-role" class="profile-role-pill">Elderly Player</span>
+              </div>
+            </div>
+
+            <div class="account-details-grid">
+              <div class="acc-detail-item">
+                <span class="acc-detail-label">User ID</span>
+                <span class="acc-detail-val" id="profile-user-id">#--</span>
+              </div>
+              <div class="acc-detail-item">
+                <span class="acc-detail-label">Security</span>
+                <span class="acc-detail-val">Bcrypt + JWT</span>
+              </div>
+              <div class="acc-detail-item">
+                <span class="acc-detail-label">Status</span>
+                <span class="acc-detail-val" style="color: #15803D; font-weight: 700;">● Active</span>
+              </div>
+            </div>
+
+            <div class="account-actions">
+              <a href="dashboard.html" class="btn btn-secondary btn-block" style="text-align: center; text-decoration: none; display: block; margin-bottom: 10px;">
+                📊 Open Caregiver Dashboard
+              </a>
+              <button type="button" class="btn btn-primary btn-block" id="btn-account-logout">
+                Sign Out / Switch User <span>→</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Game Completion Result Modal Dialog -->
+    <div class="modal-backdrop" id="game-result-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" style="display: none;">
+      <div class="modal-card">
+        <div class="modal-celebration" aria-hidden="true">🎉 🌸 🌟</div>
+        <h3 class="modal-title" id="modal-title">Wonderful Job! Game Complete!</h3>
+        <p class="modal-sub">You have successfully found all matching pairs.</p>
+
+        <div class="results-grid">
+          <div class="result-item highlight">
+            <span class="res-label">Final Score</span>
+            <span class="res-val" id="res-score">0</span>
+          </div>
+          <div class="result-item highlight">
+            <span class="res-label">Accuracy</span>
+            <span class="res-val" id="res-accuracy">0%</span>
+          </div>
+          <div class="result-item">
+            <span class="res-label">Time Taken</span>
+            <span class="res-val" id="res-time">0s</span>
+          </div>
+          <div class="result-item">
+            <span class="res-label">Difficulty</span>
+            <span class="res-val" id="res-difficulty">Easy</span>
+          </div>
+          <div class="result-item">
+            <span class="res-label">Total Attempts</span>
+            <span class="res-val" id="res-attempts">0</span>
+          </div>
+          <div class="result-item">
+            <span class="res-label">Mistakes</span>
+            <span class="res-val" id="res-mistakes">0</span>
+          </div>
+          <div class="result-item">
+            <span class="res-label">Matched Pairs</span>
+            <span class="res-val" id="res-matched">4 / 4</span>
+          </div>
+          <div class="result-item">
+            <span class="res-label">Hints Used</span>
+            <span class="res-val" id="res-hints">0</span>
+          </div>
+          <div class="result-item" style="grid-column: 1 / -1;">
+            <span class="res-label">Active Player Profile</span>
+            <span class="res-val" id="res-player" style="font-size: 15px; font-weight: 700; color: var(--color-primary);">Grandma Rose (DEMO User #1)</span>
+          </div>
+        </div>
+
+        <!-- AI Adaptive Difficulty Recommendation Card (Phase 5) -->
+        <div class="ai-recommendation-card" id="ai-rec-card" role="region" aria-label="AI Adaptive Difficulty Recommendation">
+          <div class="ai-rec-header">
+            <span class="ai-rec-icon" aria-hidden="true">🧠</span>
+            <div class="ai-rec-title-wrap">
+              <h4 class="ai-rec-title">AI Adaptive Recommendation</h4>
+              <span class="ai-rec-subtitle">Personalized next-round pace based on your gameplay</span>
+            </div>
+          </div>
+
+          <!-- Loading State -->
+          <div class="ai-rec-loading" id="ai-rec-loading">
+            <span class="ai-spinner" aria-hidden="true"></span>
+            <span>Analyzing gameplay rhythm to recommend your next difficulty...</span>
+          </div>
+
+          <!-- Result Content State -->
+          <div class="ai-rec-content" id="ai-rec-content" style="display: none;">
+            <div class="ai-rec-badge-row">
+              <span class="ai-rec-label">Recommended Next Level:</span>
+              <span class="rec-diff-badge diff-medium" id="ai-rec-difficulty-badge">Medium</span>
+              <span class="rec-conf-badge" id="ai-rec-confidence">98% match</span>
+            </div>
+            <p class="ai-rec-message" id="ai-rec-message">
+              Great matching pace! Medium difficulty will offer a comfortable, engaging challenge.
+            </p>
+            <div class="ai-rec-comparison">
+              <span>Current Round: <strong id="rec-current-diff">Easy (8 cards)</strong></span>
+              <span class="ai-arrow" aria-hidden="true">➔</span>
+              <span>Next Suggested: <strong id="rec-next-diff">Medium (12 cards)</strong></span>
+            </div>
+            <div class="ai-rec-disclaimer">
+              <small>💡 Adapts game card count for comfort &amp; engagement — strictly non-diagnostic.</small>
+            </div>
+          </div>
+
+          <!-- Fallback Offline State -->
+          <div class="ai-rec-fallback" id="ai-rec-fallback" style="display: none;">
+            <p id="ai-rec-fallback-msg">ℹ️ AI recommendation currently unavailable (offline mode). You can continue playing comfortably at your chosen pace!</p>
+          </div>
+        </div>
+
+        <!-- Database Save Status Indicator (Phase 3 Backend Connection) -->
+        <div id="res-save-status" class="res-save-status" role="status" aria-live="polite" style="display: none;"></div>
+
+        <div class="modal-note">
+          <small>✓ Game performance data is automatically sent to the FastAPI backend and recorded in MySQL (mindbloom_db).</small>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-primary btn-block btn-lg" id="btn-modal-play-recommended" style="display: none;">
+            <span>▶</span> Start Next Round (Recommended: <span id="btn-rec-diff-text">Medium</span>)
+          </button>
+          <button type="button" class="btn btn-secondary btn-block" id="btn-modal-play-again">
+            <span>↺</span> Replay Current Level
+          </button>
+          <a href="dashboard.html" class="btn btn-outline btn-block" style="text-align: center; text-decoration: none; display: block;">
+            <span>📊</span> View Caregiver Dashboard
+          </a>
+          <button type="button" class="btn btn-outline btn-block" id="btn-modal-close">
+            Close Results
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ====================================================================
+       FOOTER
+       ==================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      
+      <div class="footer-grid">
+        
+        <!-- Brand & Description -->
+        <div class="footer-brand">
+          <div class="brand">
+            <span class="brand-name">MindBloom</span>
+          </div>
+          <span class="brand-subtext">AI-Powered Cognitive &amp; Memory Assistance</span>
+          <p class="footer-desc">
+            An academic prototype empowering elderly memory health, daily engagement, and family caregiving through adaptive technology.
+          </p>
+          <div class="sih-badge" style="background: rgba(255,255,255,0.1); color: #FFF; border-color: rgba(255,255,255,0.2);">
+            Smart India Hackathon 2026 • SIH26003
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-links">
+          <h4>Explore MindBloom</h4>
+          <ul class="footer-nav">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About MindBloom</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#game">Memory Match Game</a></li>
+            <li><a href="dashboard.html">Caregiver Dashboard</a></li>
+            <li><a href="#login">Login Portal</a></li>
+          </ul>
+        </div>
+
+        <!-- Portals Overview -->
+        <div class="footer-links">
+          <h4>Platform Portals</h4>
+          <ul class="footer-nav">
+            <li><a href="#login">Patient Dashboard</a></li>
+            <li><a href="dashboard.html">Caregiver Monitoring (Live Dashboard)</a></li>
+            <li><a href="#how-it-works">AI Adaptive System</a></li>
+            <li><a href="#about">North Eastern Region Focus</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Prominent Medical Disclaimer -->
+      <div class="footer-disclaimer-box" role="contentinfo">
+        <strong>Academic &amp; Medical Disclaimer:</strong> MindBloom is an academic project prototype developed for Smart India Hackathon (SIH 2026) Problem Statement SIH26003. MindBloom is designed exclusively for cognitive entertainment, recreational mental exercises, and memory assistance. <strong>MindBloom does NOT claim to diagnose, treat, prevent, or cure dementia, Alzheimer's disease, or any medical or neurological condition.</strong> It is not a medical device and should not replace professional medical advice, clinical diagnosis, or specialized clinical care.
+      </div>
+
+      <!-- Bottom Copyright & Status -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 MindBloom Platform. SIH 2026 Academic Prototype.</p>
+        <p>Phase 1: Frontend Foundation (HTML5 / CSS3 / Vanilla JS)</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/script.js"></script>
+</body>
+</html>
+
